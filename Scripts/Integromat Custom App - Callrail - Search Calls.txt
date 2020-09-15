@@ -1,0 +1,216 @@
+
+
+// COMMUNICATION
+
+{
+	"url": "/{{parameters.account_id}}/calls.json",
+	"method": "GET",
+	"qs": {
+		"answer_status": "{{parameters.answer_status}}",
+		"device": "{{parameters.device}}"
+	},
+	"headers": {
+		"Authorization": "Token {{parameters.api_key}}"
+	},
+	"response": {
+		"iterate": "{{body.calls}}"
+	}
+}
+
+
+
+// STATIC PARAMETERS
+
+[
+	
+	{
+		"name": "api_key",
+		"type": "text",
+		"label": "API Key",
+		"required": true,
+		"help": "Retrieve your API V3 Key from the /profile/api-keys page path after your company id"
+	},
+	{
+		"name": "answer_status",
+		"type": "text",
+		"label": "Answer Status",
+		"required": false,
+		"help": "answered, missed, or voicemail"
+	}
+]
+
+
+
+// MAPPABLE PARAMETERS
+
+[
+	{
+		"name": "account_id",
+		"type": "number",
+		"label": "Account ID",
+		"required": true
+	},
+	{
+		"name": "company_id",
+		"type": "number",
+		"label": "Company ID",
+		"required": false
+	},
+	{
+		"name": "tracker_id",
+		"type": "text",
+		"label": "Tracker ID",
+		"required": false
+	}
+]
+
+
+
+// INTERFACE
+
+[
+    {
+        "name": "page",
+        "type": "number"
+    },
+    {
+        "name": "per_page",
+        "type": "number"
+    },
+    {
+        "name": "total_pages",
+        "type": "number"
+    },
+    {
+        "name": "total_records",
+        "type": "number"
+    },
+    {
+        "name": "calls",
+        "type": "array",
+        "spec": {
+            "type": "collection",
+            "spec": [
+                {
+                    "name": "answered",
+                    "type": "boolean"
+                },
+                {
+                    "name": "business_phone_number",
+                    "type": "text"
+                },
+                {
+                    "name": "customer_city",
+                    "type": "text"
+                },
+                {
+                    "name": "customer_country",
+                    "type": "text"
+                },
+                {
+                    "name": "customer_name",
+                    "type": "text"
+                },
+                {
+                    "name": "customer_phone_number",
+                    "type": "text"
+                },
+                {
+                    "name": "customer_state",
+                    "type": "text"
+                },
+                {
+                    "name": "direction",
+                    "type": "text"
+                },
+                {
+                    "name": "duration",
+                    "type": "number"
+                },
+                {
+                    "name": "id",
+                    "type": "text"
+                },
+                {
+                    "name": "recording",
+                    "type": "text"
+                },
+                {
+                    "name": "recording_duration",
+                    "type": "text"
+                },
+                {
+                    "name": "recording_player",
+                    "type": "text"
+                },
+                {
+                    "name": "start_time",
+                    "type": "text"
+                },
+                {
+                    "name": "tracking_phone_number",
+                    "type": "text"
+                },
+                {
+                    "name": "voicemail",
+                    "type": "boolean"
+                },
+                {
+                    "name": "agent_email",
+                    "type": "text"
+                }
+            ]
+        }
+    }
+]
+
+
+
+// SAMPLES
+
+{
+  "page": 1,
+  "per_page": 100,
+  "total_pages": 1,
+  "total_records": 9,
+  "calls": [
+    {
+      "answered": false,
+      "business_phone_number": null,
+      "customer_city": "Denver",
+      "customer_country": "US",
+      "customer_name": "RUEGSEGGER SIMO",
+      "customer_phone_number": "+13036231131",
+      "customer_state": "CO",
+      "direction": "inbound",
+      "duration": 4,
+      "id": "CAL8154748ae6bd4e278a7cddd38a662f4f",
+      "recording": "https://api.callrail.com/v3/a/227799611/calls/111222333/recording.json",
+      "recording_duration": "27",
+      "recording_player": "https://app.callrail.com/calls/111222333/recording?access_key=3b91eb7f7cc08a4d01ed",
+      "start_time": "2017-01-24T11:27:48.119-05:00",
+      "tracking_phone_number": "+13038163491",
+      "voicemail": false,
+      "agent_email": "gil@televised.com"
+    },
+    {
+      "answered": false,
+      "business_phone_number": null,
+      "customer_city": "Blue Ridge",
+      "customer_country": "US",
+      "customer_name": "BLUE RIDGE, GA",
+      "customer_phone_number": "+17064558047",
+      "customer_state": "GA",
+      "direction": "inbound",
+      "duration": 16,
+      "id": "CAL8154748ae6bd4e278a7cddd38a662f4f",
+      "recording": null,
+      "recording_duration": null,
+      "recording_player": null,
+      "start_time": "2017-01-24T19:50:03.456-05:00",
+      "tracking_phone_number": "+17708243899",
+      "voicemail": false,
+      "agent_email": "elbert@bpp.com"
+    }
+  ]
+}

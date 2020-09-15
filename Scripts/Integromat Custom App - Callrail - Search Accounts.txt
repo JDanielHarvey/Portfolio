@@ -1,0 +1,82 @@
+
+
+// COMMUNICATION
+
+{
+	"url": "https://api.callrail.com/v3/a.json",
+	"method": "GET",
+	"qs": {
+		"sort": "{{parameters.sort}}",
+		"order": "{{parameters.order}}",
+		"hipaa_account": "{{parameters.hipaa}}"
+	},
+	"headers": {
+		"Authorization": "Token {{parameters.api_key}}"
+	},
+	"response": {
+		"iterate": "{{body.accounts}}"
+	}
+}
+
+
+
+// STATIC PARAMETERS
+
+[
+	{
+		"name": "api_key",
+		"type": "text",
+		"label": "API Token",
+		"required": true,
+		"help": "Retrieve your API V3 Key from the /profile/api-keys page path after your company id"
+	},
+	{
+		"name": "hipaa",
+		"type": "text",
+		"label": "Hipaa Account",
+		"required": false,
+		"help": "Enter either TRUE or FALSE"
+	},
+	{
+		"name": "sort",
+		"type": "text",
+		"label": "Account Name Sorting",
+		"required": false,
+		"help": "Specifiy the value [name] in this field if you would like to sort the results by account name"
+	},
+	{
+		"name": "order",
+		"type": "text",
+		"label": "Name Sorting",
+		"required": false,
+		"help": "Specify [asc] or [desc]. You must include name in the sort field if you enter a value for order"
+	}
+]
+
+
+
+
+// INTERFACE
+
+[
+	{
+		"name": "id",
+		"type": "uinteger",
+		"label": "User ID"
+	},
+	{
+		"name": "email",
+		"type": "email",
+		"label": "Email address"
+	},
+	{
+		"name": "name",
+		"type": "text",
+		"label": "Name"
+	},
+	{
+		"name": "created",
+		"type": "date",
+		"label": "Date created"
+	}
+]
