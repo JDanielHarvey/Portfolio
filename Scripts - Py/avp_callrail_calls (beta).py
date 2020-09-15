@@ -13,13 +13,17 @@ import datetime
 import datetime
 import pyodbc 
 import csv
-
+import os
 
 # -- prelims for AVP_GCSQL 
+serverip = os.environ["GOOGLE_SERVER"]
+serveruid = os.environ["GOOGLE_SQLUID"]
+serverpwd = os.environ["GOOGLE_SQLPWD"]
+
 conn_string = '''
     DRIVER={SQL Server Native Client 11.0};
-    SERVER=34.94.213.153;Database=avp_marketing;
-    UID=sqlserver;PWD=AvP2020!;
+    SERVER=serverip;Database=avp_marketing;
+    UID=serveruid;PWD=serverpwd;
     '''
 insert_query = '''
 	INSERT INTO callrail_calls_py 
