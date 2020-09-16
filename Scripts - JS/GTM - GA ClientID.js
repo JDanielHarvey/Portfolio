@@ -10,7 +10,7 @@ document.querySelector(selector).value = "{{cjs - ga clientid}}"
 
 
 
-// CJS variable
+// CJS variable - modify the GA property_id to match the tracker being used
 
 function() {
 	try {
