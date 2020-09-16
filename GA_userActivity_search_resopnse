@@ -1,4 +1,5 @@
-// https://analyticsreporting.googleapis.com/v4/userActivity:search
+// demo - https://developers.google.com/analytics/devguides/reporting/core/v4/rest/v4/userActivity/search
+// endpoint - https://analyticsreporting.googleapis.com/v4/userActivity:search
 
 {
   "sessions": [
