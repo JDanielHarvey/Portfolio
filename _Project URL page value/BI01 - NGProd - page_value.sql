@@ -279,47 +279,4 @@ FROM (
 	) sq2
 WHERE sq2.ddif = 0
 GO
-
-
--->
-	--> Toni Norton '56D41F35-E997-4FFD-BCDA-14331ADB94BD'
-SELECT 
-	sq2.*
-FROM (
-	SELECT 
-		sq.*,
-		--MIN(sq.tdif) OVER(PARTITION BY sq.person_id) 'tdif_min',
-		--MAX(sq.tdif) OVER(PARTITION BY sq.person_id) 'tdif_max',
-		MAX(sq.xdrnk_phone) OVER(PARTITION BY sq.cr_phone) 'xrow_phone_max',
-		MAX(sq.xdrnk_prsn) OVER(PARTITION BY sq.person_id) 'xrow_prs_max',
-		CASE WHEN sq.xrow_prs > 1 AND sq.xdrnk_phone = 1 THEN 2 ELSE 1 END AS 'eliminate_2'
-	FROM (
-		SELECT TOP 2000
-			pmg.*,
-			ROW_NUMBER() OVER(PARTITION BY pmg.person_id ORDER BY pmg.appt_create_date DESC, pmg.tdif ASC) 'xrow_recent',
-			ROW_NUMBER() OVER(PARTITION BY pmg.person_id, pmg.cr_phone ORDER BY pmg.call_date DESC) 'xrow_prs',
-			ROW_NUMBER() OVER(PARTITION BY pmg.person_id, CAST(pmg.appt_create_date AS DATE) ORDER BY pmg.tdif ASC) 'xrow_prs_day',
-			DENSE_RANK() OVER(PARTITION BY pmg.cr_phone ORDER BY pmg.person_id ASC) 'xdrnk_phone',
-			DENSE_RANK() OVER(PARTITION BY pmg.person_id ORDER BY pmg.cr_phone ASC) 'xdrnk_prsn'
-		FROM ##phone_match_grpfilt pmg 
-		) sq
-	WHERE 
-		sq.cr_phone NOT IN ('6029551000', '6022775551')
-	) sq2 
-WHERE sq2.xrow_prs_max > 1 --sq2.eliminate_2 = 1 
-ORDER BY sq2.cr_phone
-
-
-SELECT * FROM ##phone_match_grpfilt
-WHERE person_id = 'B73C0FB4-3305-4B43-BACB-C892D1E1D983'
-ORDER BY appt_create_date ASC
-
-SELECT 
-	cc.customer_phone_number, cc.duration,
-	cc.created_at, cc.device_type, cc.campaign,
-	cc.medium, cc.source, cc.source_name, cc.keywords,
-	cc.landing_page_url, cc.last_requested_url, cc.utm_term, cc.utm_content
-FROM AVP_Marketing.dbo.src_callrail_calls cc
-WHERE RIGHT(cc.customer_phone_number,10) IN ('6266654084','6023156092')
-ORDER BY cc.created_at ASC
-*/
+END
