@@ -240,43 +240,5 @@ FROM (
 		FROM ##pv_attr_1a p1a
 		) sq
 	) sq2
-
-
-
-/*
-SELECT 
-	c2a.caller_id, c2a.call_date, COUNT(DISTINCT person_id) 'num_pts'
-FROM ##caller_2a c2a
-WHERE c2a.credit_attr = 'full_credit'
-GROUP BY c2a.caller_id, c2a.call_date
-
-SELECT * FROM ##caller_2a WHERE caller_id = '4067881710'
-
---> group by day, keeping the first daily instance of calls and appointments
-	--> 15,094 for same day (strict determination)
-DROP TABLE IF EXISTS ##phone_match_grpfilt
-SELECT 
-	sq2.*, DATEDIFF(MINUTE, sq2.call_date, sq2.appt_create_date) 'tdif'
-INTO ##phone_match_grpfilt
-FROM (
-	SELECT 
-		sq1a.*, sq1b.appt_create_date, DATEDIFF(DAY,sq1a.call_date,sq1b.appt_create_date) 'ddif'
-	FROM (
-		SELECT
-			pmb.cr_phone, pmb.person_id, pmb.first_name, pmb.last_name, MIN(pmb.call_date) 'call_date'
-		FROM ##phone_match_base pmb
-		--WHERE pmb.dDiff >= 0
-		GROUP BY pmb.cr_phone, pmb.person_id, pmb.first_name, pmb.last_name, CAST(pmb.call_date AS DATE)
-	) sq1a
-		LEFT JOIN
-		(SELECT 
-			pmb.person_id, MIN(pmb.appt_create_date) 'appt_create_date'
-		FROM ##phone_match_base pmb
-		--WHERE pmb.diff >= 0
-		GROUP BY pmb.person_id, CAST(pmb.appt_create_date AS DATE)
-		) sq1b ON
-			sq1a.person_id = sq1b.person_id
-	) sq2
-WHERE sq2.ddif = 0
 GO
 END
