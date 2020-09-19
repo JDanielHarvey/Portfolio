@@ -1,0 +1,51 @@
+
+// Step 1
+	// used to import production logs and calculate "Total Days Ran" by Brand and Medium
+=
+	query(
+		query(
+			query({IMPORTRANGE("1nqJKRmT_gHEcY1wBAt7QPZgjOv6ilnW8sBMV2wWiono","A5:N123");IMPORTRANGE("1e5NWq5_vx6FOggxlGgTNJtYVzaGBNLq7zeGjb7dbEmE","RefQuery1 (staging)!A2:N1000")},
+			"SELECT D,A,((H-G)+1),COUNT(A) WHERE D is not null GROUP BY D,A,(H-G) LABEL (H-G)+1 'stuff'",1),
+		"SELECT Col1,Col2,Col3*Col4",1),
+	"SELECT Col1,Col2,SUM(Col3) GROUP BY Col1,Col2 ORDER BY Col2 ASC LABEL SUM(Col3) 'Total Days Ran'",1)
+	
+
+// Step 2	
+	// used in adjacent column and respective rows (Step 1) to get a concatenated list of each service advertised for the Brand and Medium
+=
+	ArrayFormula(
+		regexreplace(
+			join(", ",
+				substitute(
+					unique(sort(
+						filter(append!$I$2:$I$1300,append!$D$2:$D$1300=B3,append!$A$2:$A$1300=C3)
+					,1,FALSE)),
+				"TBD","")),
+		"^,\s","")
+	)
+
+
+// Step 3
+	// used in adjacent column and respective rows (Step 1) to get a concatenated list of each service advertised for the Brand and Medium with a first and last date 
+=
+	ArrayFormula(
+		regexreplace(
+			join(", ",
+				regexreplace(
+					regexreplace(
+						transpose(query(
+							transpose(query(
+								filter(append!$G$2:$I$1300,append!$D$2:$D$1300=B3,append!$A$2:$A$1300=C3),
+								"SELECT MIN(Col1), MAX(Col2), Col3 GROUP BY Col3 ORDER BY MIN(Col1) FORMAT MIN(Col1) 'mm/yy', MAX(Col2) 'mm/yy'"))
+						,,3)),
+					".* TBD$",""),
+				"min.*max|.* TBD$","")),
+		"  , |,\s$",""))
+	
+	
+// Step 4
+	// used in adjacent column and respective rows (Step 2) to get a count on the number of services 
+=
+	LEN(
+		regexreplace(E3,"[a-z|A-Z|0-9 $()_.-]*","")
+		)+1
