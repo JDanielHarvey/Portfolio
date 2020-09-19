@@ -1,0 +1,6 @@
+Cnt Agents >10 - Create Date:=
+CALCULATE(
+	DISTINCTCOUNT('appointments'[user_id]),
+		FILTER(VALUES(appointments[user_id]),CALCULATE(COUNTROWS('appointments')>10))
+		,USERELATIONSHIP('calendar'[Dates],appointments[create_timestamp])
+	)
