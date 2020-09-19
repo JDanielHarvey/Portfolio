@@ -71,13 +71,6 @@ get_file()
 download_file()
 
 
-# mod_date = ''
-# for i in range(len(date_string)):
-# 	if i <= 5:
-# 		mod_date = mod_date + date_string[i]
-# print(f'{mod_date}_shoretel_pbx.csv')
-
-
 
 
 
