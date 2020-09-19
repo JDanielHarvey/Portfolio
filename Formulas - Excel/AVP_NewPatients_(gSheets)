@@ -2,6 +2,7 @@
 
 
 // used to make an adjustment on the previous year months number of patients by altering the number of revenue days to match the current year month 
+// uses an array literal for all 2019 and 2020 holidays - this could be updated to be dynamic
 =if(
 	year(A2)=2020,
 		G2,
