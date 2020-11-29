@@ -20,7 +20,8 @@
 					unique(sort(
 						filter(append!$I$2:$I$1300,append!$D$2:$D$1300=B3,append!$A$2:$A$1300=C3)
 					,1,FALSE)),
-				"TBD","")),
+				"TBD","")
+			),
 		"^,\s","")
 	)
 

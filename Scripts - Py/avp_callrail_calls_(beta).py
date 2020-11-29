@@ -43,8 +43,8 @@ insert_query = insert_query.replace('\n','').replace('\t','')
 
 
 # __ global variable declaration (prelims for callrail) 
-account_id = '524183757'
-api_tok = 'Token 6fab3261e8737c493908aff8529e7611'
+account_id = 'xxx'
+api_tok = 'Token xxx'
 field_select = '''
 	company_id,company_name,created_at,device_type,
 	first_call,prior_calls,campaign,medium,
