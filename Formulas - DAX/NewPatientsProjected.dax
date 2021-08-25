@@ -1,0 +1,20 @@
+
+Projected New Pts = 
+    
+VAR RevDaysManual = 
+	CALCULATE( 
+		COUNTROWS(dCalendar_bi01), 
+		FILTER( dCalendar_bi01, 
+			dCalendar_bi01[rev_day] = 1 && 
+			dCalendar_bi01[full_Date] <= TODAY()-1 
+			) 
+		)
+RETURN
+
+    IF(
+        MAX('dCalendar_bi01'[FirstofMonth]) = DATE(YEAR(today()),MONTH(TODAY()),1), 
+        	DIVIDE( SUM(fApts[Visits Standardized]), RevDaysManual ) * MAX('dCalendar_bi01'[rev_day_yyyymm]), 
+        	[Count New Pts]
+        )
+
+

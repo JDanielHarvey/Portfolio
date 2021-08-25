@@ -1,0 +1,22 @@
+Rev Days in Spec Period = 
+
+VAR SixMonthsAgo = EOMONTH(TODAY(), -7) + 1
+VAR FourMonthsAgo = EOMONTH(TODAY(), -4) 
+
+VAR ThreeMonthsAgo = EOMONTH(TODAY(), -4) + 1
+VAR LastMonth = EOMONTH(TODAY(), -1) 
+
+VAR PriorPeriod =
+    CALCULATE(
+        [Sum Rev Days],
+        DATESBETWEEN(dCalendar_bi01[full_Date], SixMonthsAgo, FourMonthsAgo)
+    )
+
+VAR LatestPeriod = 
+     CALCULATE(
+        [Sum Rev Days],
+        DATESBETWEEN(dCalendar_bi01[full_Date], ThreeMonthsAgo, LastMonth)
+    )
+
+RETURN
+    PriorPeriod
