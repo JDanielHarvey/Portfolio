@@ -1,0 +1,24 @@
+2021 v 20_19 LASIK Consults = 
+        VAR TwentyTwentyOne = 
+            CALCULATE( [Projected LASIK Consults], 
+                FILTER(ALL(dCalendar_bi01[Year]), dCalendar_bi01[Year] = 2021 ) 
+                )
+        VAR TwentyTwenty = 
+            CALCULATE( [LASIK Consults], 
+                FILTER(ALL(dCalendar_bi01[Year]), dCalendar_bi01[Year] = 2020) 
+                )
+        VAR TwentyNinteen = 
+            CALCULATE( [LASIK Consults], 
+                FILTER(ALL(dCalendar_bi01[Year]), dCalendar_bi01[Year] = 2019) 
+                )
+        RETURN 
+
+    SWITCH( TRUE(),
+    
+    //Only divides when a value is present b/c the '-1' will force values into empty cells creating -100%
+        MIN(dCalendar_bi01[Year]) = 2020 && TwentyTwentyOne > 3 && TwentyTwenty > 3 && (DIVIDE(TwentyTwentyOne, TwentyTwenty) - 1) < 2, 
+            DIVIDE(TwentyTwentyOne, TwentyTwenty) - 1 ,
+        MIN(dCalendar_bi01[Year]) = 2019 && TwentyTwentyOne > 3 && TwentyNinteen > 3, 
+            DIVIDE(TwentyTwentyOne, TwentyNinteen) - 1,
+        BLANK()
+    )
